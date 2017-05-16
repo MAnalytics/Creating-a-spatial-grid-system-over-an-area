@@ -12,8 +12,8 @@ area_B <- readOGR(dsn=".", layer="boundary_SS_wgs_84")
 #Example: For South Chicago, the "PROJ.4 attributes" is: "+proj=utm +zone=16 +ellps=clrk66 +units=m +no_defs", thus;
 proj_Coods <- "+proj=utm +zone=16 +ellps=clrk66 +units=m +no_defs"
 
-#3.Size of grid unit to create (in metres) 
-g_size = 250
+#3.Size of grid unit to create (in metres) e.g. 50m, 100m, 150m, and so on.
+g_size = 250 
 
 #-----------------------------------
 #Creating the spatial grid system:
