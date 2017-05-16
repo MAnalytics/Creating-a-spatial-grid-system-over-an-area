@@ -1,6 +1,12 @@
 # Creating-a-Spatial-Grid-System over a study area
 #Given a boundary shapefile, this script creates a spatial grid system of a specified unit size over the entire area
 
+#Install packages
+install.packages("sp")
+install.packages("rgdal")
+library(sp)
+library(rgdal)
+
 #-----------------------------------
 #Inputs parameters:
 #-----------------------------------
