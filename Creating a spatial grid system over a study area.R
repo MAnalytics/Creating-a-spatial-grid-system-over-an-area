@@ -85,4 +85,4 @@ plot(area_B, add=TRUE)
 plot(intersect_grids, add=TRUE, col="red")
 
 #to export the grids
-writeOGR(intersect_grids, '.', 'grid_system', 'ESRI Shapefile', overwrite_layer=T)
+writeOGR(intersect_grids, '.', 'spatial_grid_system', 'ESRI Shapefile', overwrite_layer=T)
