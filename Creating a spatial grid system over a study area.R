@@ -90,5 +90,5 @@ plot(polys.df)
 plot(area_B, add=TRUE)
 plot(intersect_grids, add=TRUE, col="red")
 
-#to export the grids
+#exporting the grids created
 writeOGR(intersect_grids, '.', 'spatial_grid_system', 'ESRI Shapefile', overwrite_layer=T)
