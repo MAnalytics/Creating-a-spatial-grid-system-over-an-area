@@ -1,5 +1,5 @@
 # Creating-a-Spatial-Grid-System over a study area
-#Given a boundary shapefile, this script creates a spatial grid system of a specified unit size over the entire area
+# Given a boundary shapefile, this script creates a spatial grid system of a specified unit size over the entire area
 
 #Install packages
 install.packages("sp")
@@ -8,7 +8,7 @@ library(sp)
 library(rgdal)
 
 #-----------------------------------
-#Inputs parameters:
+# Inputs parameters:
 #-----------------------------------
 #1. Boundary shapefile(.shp) in any CRS
 area_B <- readOGR(dsn=".", layer="boundary_SS_wgs_84")
@@ -33,17 +33,17 @@ proj_area_B <- spTransform(area_B, CRS(proj_Coods))
 #creating the grids
 b_coord <- bbox(proj_area_B)
 
-#offsetting to create space for enough grids
+# Offsetting to create space for enough grids
 min_x <- round(b_coord[1,1], digits=-2)- 200 #
 min_y <- round(b_coord[2,1], digits=-2)- 200
 max_x <- round(b_coord[1,2], digits=-2)+ 500 
 max_y <- round(b_coord[2,2], digits=-2)+ 500
 
-#creating sequence of grid coordinates...
+# Creating sequence of grid coordinates...
 x <- seq(min_x,max_x,by=g_size) 
 y <- seq(min_y,max_y,by=g_size)
 
-#generate centroid coordinates of each grid
+# Generate centroid coordinates of each grid
 id <- 0
 centroid_points <- NULL
 for(i in 1: length(x)){
@@ -55,7 +55,7 @@ for(i in 1: length(x)){
 colnames(centroid_points) <- c("id", "x", "y")
 centroid_points <- as.data.frame(centroid_points)
 
-#creating the coordinates of the four edges of each grid unit
+# Creating the coordinates of the four edges of each grid unit
 radius <- g_size/2 #radius in meters
 yPlus <- centroid_points$y+radius
 xPlus <- centroid_points$x+radius
@@ -64,10 +64,10 @@ xMinus <- centroid_points$x-radius
 
 
 ID=centroid_points$id
-#combining the edge coordinates for each unit 
+# Combining the edge coordinates for each unit 
 square=cbind(xMinus,yPlus, xPlus,yPlus, xPlus,yMinus, xMinus,yMinus,xMinus,yPlus,xMinus,yPlus)
 
-#create spatial grid unit system (polygons)---this requires WGS84 CRS as input below
+# Create spatial grid unit system (polygons)---this requires WGS84 CRS as input below
 polys <- SpatialPolygons(mapply(function(poly, id) {
   xy <- matrix(poly, ncol=2, byrow=TRUE)
   Polygons(list(Polygon(xy)), ID=id)
@@ -75,20 +75,20 @@ polys <- SpatialPolygons(mapply(function(poly, id) {
 
 
 
-#Create SpatialPolygonDataFrame -- this step is required to output multiple polygons.
+# Create SpatialPolygonDataFrame -- this step is required to output multiple polygons.
 polys.df <- SpatialPolygonsDataFrame(polys, data.frame(id=ID, row.names=ID))
 
-#clipping the intersecting grid units with the boundary
-#list of grids that intersect the boundary
+# Clipping the intersecting grid units with the boundary
+# List of grids that intersect the boundary
 area_B <- spTransform(area_B, CRS(proj_Coods))
 intersect_grids <- polys.df %over% area_B
 intersect_grids <- polys.df[which(intersect_grids[,1]==0),]
 
 
-#visulising the results
+# Visulising the results
 plot(polys.df)
 plot(area_B, add=TRUE)
 plot(intersect_grids, add=TRUE, col="red")
 
-#exporting the grids created
+# Exporting the grids created
 writeOGR(intersect_grids, '.', 'spatial_grid_system', 'ESRI Shapefile', overwrite_layer=T)
