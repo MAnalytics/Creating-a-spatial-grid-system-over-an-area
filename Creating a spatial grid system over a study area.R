@@ -44,6 +44,7 @@ x <- seq(min_x,max_x,by=g_size)
 y <- seq(min_y,max_y,by=g_size)
 
 # Generate centroid coordinates of each grid
+# Generate centroid coordinates of each grid
 id <- 0
 centroid_points <- NULL
 for(i in 1: length(x)){
@@ -55,6 +56,7 @@ for(i in 1: length(x)){
 colnames(centroid_points) <- c("id", "x", "y")
 centroid_points <- as.data.frame(centroid_points)
 
+# Creating the coordinates of the four edges of each grid unit
 # Creating the coordinates of the four edges of each grid unit
 radius <- g_size/2 #radius in meters
 yPlus <- centroid_points$y+radius
