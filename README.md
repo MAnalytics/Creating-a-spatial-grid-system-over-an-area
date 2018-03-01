@@ -3,3 +3,4 @@ Given a boundary shapefile, this "Creating-a-spatial-grid-system-over-a-study-ar
 
 
 Output: a polygon shapefile comprising a system of square grids is created and exported into the working directory.
+Output: a polygon shapefile comprising a system of square grids is created and exported into the working directory.
