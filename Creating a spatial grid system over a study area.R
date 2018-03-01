@@ -102,3 +102,5 @@ plot(intersect_grids, add=TRUE, col="red")
 
 # Exporting the grids created
 writeOGR(intersect_grids, '.', 'spatial_grid_system', 'ESRI Shapefile', overwrite_layer=T)
+writeOGR (intersect_grids, .......
+	  #sdfdf
